@@ -57,7 +57,7 @@
 AstroTrack is designed to run on your own infrastructure with a single command.
 
 ```bash
-git clone https://github.com/xops-labs/AstroTrack.git
+git clone https://github.com/MeAkash77/AstroTrack-Real-Time-3D-Satellite-Mission-Tracking-Platform.git
 cd AstroTrack
 docker compose up --build
 ```
