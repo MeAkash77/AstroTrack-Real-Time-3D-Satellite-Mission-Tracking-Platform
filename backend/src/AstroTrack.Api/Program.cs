@@ -77,11 +77,9 @@ builder.Services.AddOpenTelemetry()
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// Enable Swagger in all environments (not just development)
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Auto-apply EF Core migrations on startup when using Postgres.
 if (!string.IsNullOrWhiteSpace(pgConn))
@@ -93,6 +91,23 @@ if (!string.IsNullOrWhiteSpace(pgConn))
 
 app.UseCors();
 app.MapControllers();
+
+// ADD THIS ROOT ENDPOINT
+app.MapGet("/", () =>
+{
+    return Results.Ok(new
+    {
+        Status = "AstroTrack API is running 🚀",
+        Swagger = "/swagger",
+        Endpoints = new
+        {
+            Satellites = "/api/satellites",
+            Missions = "/api/missions",
+            Positions = "/api/positions"
+        }
+    });
+});
+
 app.MapGet("/healthz", () => Results.Ok(new { status = "ok", time = DateTimeOffset.UtcNow }));
 
 app.Run();
